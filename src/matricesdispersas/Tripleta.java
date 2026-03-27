@@ -146,6 +146,8 @@ public class Tripleta {
                 Mtri[k][2] += dato;
             } else if (opc == 2) {
                 Mtri[k][2] = dato;
+            } else{
+                JOptionPane.showMessageDialog(null, "mano esa opcion que, es 1, 2 o 3");
             }
         }
 
@@ -233,9 +235,11 @@ public class Tripleta {
             aux[0][2] = contador;
 
             Mtri = aux;
+        } else {
+            JOptionPane.showMessageDialog(null, "Seria muy bacano no tener que decirle que la opcion " + opc + " no existe D:< ");
         }
     }
-
+    
     // sumar filas   // mejorado con el += para concat strings       
     public void SumarFilas() {
 
