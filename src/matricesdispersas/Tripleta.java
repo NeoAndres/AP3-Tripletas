@@ -146,7 +146,7 @@ public class Tripleta {
                 Mtri[k][2] += dato;
             } else if (opc == 2) {
                 Mtri[k][2] = dato;
-            } else{
+            } else {
                 JOptionPane.showMessageDialog(null, "mano esa opcion que, es 1, 2 o 3");
             }
         }
@@ -239,7 +239,7 @@ public class Tripleta {
             JOptionPane.showMessageDialog(null, "Seria muy bacano no tener que decirle que la opcion " + opc + " no existe D:< ");
         }
     }
-    
+
     // sumar filas   // mejorado con el += para concat strings       
     public void SumarFilas() {
 
@@ -400,7 +400,7 @@ public class Tripleta {
                     int colB = B.Mtri[j][1];
                     int valB = B.Mtri[j][2];
 
-                    if (colA == filaB) {
+                    if (colA == filaB) { // este if creo que es despreciable por la condicion que esta de primera pero soy juicioso y la pongo
                         int resultado = valA * valB;
 
                         boolean existe = false;
