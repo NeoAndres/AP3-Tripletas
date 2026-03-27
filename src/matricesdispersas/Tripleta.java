@@ -53,7 +53,7 @@ public class Tripleta {
     public void Mostrar() {
         String a;
         String p = "";
-        for (int k = 0; k <= Mtri[0][2]; k++) { // menor o igua pq si no no muestra la ultima o la primera linea, enm este caso la ultiima linea
+        for (int k = 0; k <= Mtri[0][2]; k++) { // menor o igua pq si no no muestra la ultima o la primera linea, enm este caso la ultiima linea juanjose
             a = ("| " + Mtri[k][0] + " | " + Mtri[k][1] + " | " + Mtri[k][2] + " |");
             p += a + "\n";
         }
@@ -90,29 +90,30 @@ public class Tripleta {
     // insertar  A este le falta parar el programa si no funciona bien los datos digitados
     public void Insertar(int fila, int columna, int dato) {
 
-        int k = 1;
-
+        // VALIDACIONES
         if (fila >= Mtri[0][0] || columna >= Mtri[0][1]) {
-            System.out.println("Error pa");
+            JOptionPane.showMessageDialog(null, "Error: fuera de rango");
+            return;
         }
 
         if (fila < 0 || columna < 0) {
-            System.out.println("No se puede pa");
+            JOptionPane.showMessageDialog(null, "Error: hay algun negativo");
+            return;
         }
 
         if (dato == 0) {
-            System.out.println("No se puede pa");
+            JOptionPane.showMessageDialog(null, "Error: no se insertan ceros pa, sea serio");
+            return;
         }
 
-        boolean existe = false; // para saber si existe ya o no la coordenada
+        int k = 1;
+        boolean existe = false; // para saber siu la coordenada si existe en verdad
 
         while (k <= Mtri[0][2]) {
-
             if (Mtri[k][0] == fila && Mtri[k][1] == columna) {
                 existe = true;
                 break;
             }
-
             k++;
         }
 
@@ -135,16 +136,19 @@ public class Tripleta {
             aux[0][2] = Mtri[0][2] + 1;
 
             Mtri = aux;
+
         } else {
 
-            int opc = Integer.parseInt(JOptionPane.showInputDialog("La posicion ya existe\n" + "1. Sumar\n" + "2. Reemplazar\n" + "3. Dejar igual"));
+            int opc = Integer.parseInt(JOptionPane.showInputDialog(
+                    "La posicion ya existe\n1. Sumar\n2. Reemplazar\n3. Dejar igual"));
 
             if (opc == 1) {
-                Mtri[k][2] = Mtri[k][2] + dato;
+                Mtri[k][2] += dato;
             } else if (opc == 2) {
                 Mtri[k][2] = dato;
             }
         }
+
         Reconstruir();
     }
 
@@ -154,8 +158,8 @@ public class Tripleta {
         String opc = JOptionPane.showInputDialog("1. Eliminar por coord \n" + "2. Eliminar por dato");
 
         if (opc.equals("1")) {
-            int fila = Integer.parseInt(JOptionPane.showInputDialog("Fila a eliminar"));
-            int columna = Integer.parseInt(JOptionPane.showInputDialog("Columna a eliminar"));
+            int fila = Integer.parseInt(JOptionPane.showInputDialog("Fila pa eliminar"));
+            int columna = Integer.parseInt(JOptionPane.showInputDialog("Columna pa eliminar"));
 
             int pos = -1;
 
@@ -169,7 +173,7 @@ public class Tripleta {
             }
 
             if (pos == -1) {
-                System.out.println("No existe ese dato");
+                System.out.println("No existe ese dato pa eliminarrlo pa");
                 return;
             }
 
@@ -232,39 +236,44 @@ public class Tripleta {
         }
     }
 
-    // sumar filas      
-    public int SumarFila(int fila) {
+    // sumar filas   // mejorado con el += para concat strings       
+    public void SumarFilas() {
 
-        int suma = 0;
+        String res = "";
 
-        for (int k = 1; k <= Mtri[0][2]; k++) {
+        for (int i = 0; i < Mtri[0][0]; i++) {
+            int suma = 0;
 
-            if (Mtri[k][0] == fila) {
-                suma += Mtri[k][2];
+            for (int k = 1; k <= Mtri[0][2]; k++) {
+                if (Mtri[k][0] == i) {
+                    suma += Mtri[k][2];
+                }
             }
 
+            res += "Fila " + i + " = " + suma + "\n"; // con el += puedo concatenar strings
         }
 
-        return suma;
+        JOptionPane.showMessageDialog(null, res);
     }
 
-// sumar columnas        
-    public int SumarColumna(int columna) {
+// sumar columnas    // corregido     
+    public void SumarColumnas() {
+        String res = "";
+        for (int j = 0; j < Mtri[0][1]; j++) {
+            int suma = 0;
 
-        int suma = 0;
-
-        for (int k = 1; k <= Mtri[0][2]; k++) {
-
-            if (Mtri[k][1] == columna) {
-                suma += Mtri[k][2];
+            for (int k = 1; k <= Mtri[0][2]; k++) {
+                if (Mtri[k][1] == j) {
+                    suma += Mtri[k][2];
+                }
             }
-
+            res += "Columna " + j + " = " + suma + "\n"; // con el += puedo concatenar strings
         }
-
-        return suma;
+        JOptionPane.showMessageDialog(null, res);
     }
 
-    // codigo para suMAR TRIPLETAS
+    // codigo para suMAR TRIPLETAS // terminado con validacion y dimension 
+    // verficado con matrixCalc :> el mejor sitio web de matrices, no profe, esto no es publicidad lo juro 
     public Tripleta SumandoTripletas(Tripleta B) {
 
         boolean sumable = false;
@@ -358,55 +367,68 @@ public class Tripleta {
         }
     }
 
-    // codigo para multiplicar tripletas
+    // codigo para multiplicar tripletas // terminado con validacion de columnas y filas  // funcional, verificado con https://matrixcalc.org/es/#%7B%7B0,93,-12%7D,%7B0,0,9%7D,%7B0,0,0%7D%7D*%7B%7B71,0,-89%7D,%7B0,53,0%7D,%7B0,0,-93%7D%7D
     public Tripleta MultiplicarTripletas(Tripleta B) {
-        if (this.Mtri[0][1] != B.Mtri[0][0]) {
-            JOptionPane.showMessageDialog(null, "No se pueden multiplicar");
-            return null;
+
+        boolean multiplicable = false;
+
+        // columnas de A iguales a las filas de B 
+        if (this.Mtri[0][1] == B.Mtri[0][0]) {
+            multiplicable = true;
         }
-        int max = this.Mtri[0][2] * B.Mtri[0][2] + 1;
-        Tripleta C = new Tripleta(max);
 
-        int k = 1;
+        if (multiplicable == true) {
 
-        for (int i = 1; i <= this.Mtri[0][2]; i++) { // para A
+            int max = this.Mtri[0][2] * B.Mtri[0][2] + 1;
+            Tripleta C = new Tripleta(max);
 
-            int filaA = this.Mtri[i][0];
-            int colA = this.Mtri[i][1];
-            int valA = this.Mtri[i][2];
+            int k = 1;
 
-            for (int j = 1; j <= B.Mtri[0][2]; j++) { // para B 
+            for (int i = 1; i <= this.Mtri[0][2]; i++) { // para A
 
-                int filaB = B.Mtri[j][0];
-                int colB = B.Mtri[j][1];
-                int valB = B.Mtri[j][2];
+                int filaA = this.Mtri[i][0];
+                int colA = this.Mtri[i][1];
+                int valA = this.Mtri[i][2];
 
-                if (colA == filaB) {
-                    int resultado = valA * valB;
+                for (int j = 1; j <= B.Mtri[0][2]; j++) { // para B 
 
-                    boolean existe = false;
+                    int filaB = B.Mtri[j][0];
+                    int colB = B.Mtri[j][1];
+                    int valB = B.Mtri[j][2];
 
-                    for (int x = 1; x < k; x++) {
-                        if (C.Mtri[x][0] == filaA && C.Mtri[x][1] == colB) {
-                            C.Mtri[x][2] += resultado;
-                            existe = true;
-                            break; 
+                    if (colA == filaB) {
+                        int resultado = valA * valB;
+
+                        boolean existe = false;
+
+                        for (int x = 1; x < k; x++) {
+                            if (C.Mtri[x][0] == filaA && C.Mtri[x][1] == colB) {
+                                C.Mtri[x][2] += resultado;
+                                existe = true;
+                                break;
+                            }
                         }
-                    }
-                    if (existe == false) {
-                        C.Mtri[k][0] = filaA;
-                        C.Mtri[k][1] = colB;
-                        C.Mtri[k][2] = resultado;
-                        k++;
+                        if (existe == false) {
+                            C.Mtri[k][0] = filaA;
+                            C.Mtri[k][1] = colB;
+                            C.Mtri[k][2] = resultado;
+                            k++;
+                        }
                     }
                 }
             }
+
+            // columnas filas y datos
+            C.Mtri[0][0] = this.Mtri[0][0];
+            C.Mtri[0][1] = B.Mtri[0][1];
+            C.Mtri[0][2] = k - 1;
+
+            return C;
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Error, la matriz A debe tener la misma cantidad de columnas que filas de la matriz B !!");
+            return null;
         }
-        
-        // columnas filas y datos
-        C.Mtri[0][0] = this.Mtri[0][0];
-        C.Mtri[0][1] = B.Mtri[0][1];
-        C.Mtri[0][2] = k - 1;
-        return C;
     }
+
 }
