@@ -23,6 +23,7 @@ public class MatricesDispersas {
                 + "4. Sumar columnas\n"
                 + "5. Mostrar tripleta\n"
                 + "6. Sumar tripletas\n"
+                + "7. Multiplicar tripletas\n"
                 + "0. Salir\n\n"
                 + "Seleccione una opcion:"
         ));
@@ -113,19 +114,13 @@ public class MatricesDispersas {
                     break;
 
                 case 3:
-                    int filass = Integer.parseInt(JOptionPane.showInputDialog("Digite la fila a sumar"));
+                    T1.SumarFilas();
 
-                    int suma = T1.SumarFila(filass);
-
-                    System.out.println("La suma de la fila es: " + suma);
                     break;
 
                 case 4:
-                    int columnasss = Integer.parseInt(JOptionPane.showInputDialog("Digite la columna a sumar"));
+                    T1.SumarColumnas();
 
-                    int sumasss = T1.SumarColumna(columnasss);
-
-                    System.out.println("La suma de la columna es: " + sumasss);
                     break;
 
                 case 5:
@@ -163,7 +158,7 @@ public class MatricesDispersas {
                     Tripleta Bs = new Tripleta(ContarDatos(Mat2s) + 1);
                     Bs.LlenarTripleta(Mat2s);
 
-                    Tripleta Cs = T1.SumandoTripletas(Bs);
+                    Tripleta Cs = T1.MultiplicarTripletas(Bs);
 
                     //esto es para que si retorna el null del multo´plicar me bote joption y vuelva al menu principal
                     if (Cs != null) {
